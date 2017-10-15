@@ -8,9 +8,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends AppCompatActivity
 {
+    private ArrayAdapter<String> adapter;
+    private List<String> historyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,16 +28,16 @@ public class Main extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+        ListView myListView = (ListView) findViewById(R.id.historyList);
+        historyList = new ArrayList<String>();
+        //historyList.add("something");
+
+        TextView emptyText = (TextView)findViewById(R.id.list_empty_text);
+        myListView.setEmptyView(emptyText);
+
+        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_black_text, historyList);
+        myListView.setAdapter(adapter);
     }
 
     @Override
