@@ -9,21 +9,30 @@
         tools:showIn="@layout/activity_main"
         tools:context="com.cedric.clipboardsync.Main">
 
-    <ListView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            tools:layout_editor_absoluteY="0dp"
-            android:id="@+id/historyList" tools:layout_editor_absoluteX="0dp"/>
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="0dp"
-              android:id="@+id/list_empty_text"
-              android:gravity="center"
-              android:text="The history is empty. Try to copy something to the clipboard"
-              android:textSize="18sp"
-              android:textColor="#8e8e8e"
-              android:layout_height="0dp"
-              android:padding="10dp"
-              android:visibility="gone" tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="0dp"/>
+
+    <!--<ListView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--tools:layout_editor_absoluteY="0dp"-->
+            <!--android:id="@+id/historyList" tools:layout_editor_absoluteX="0dp"/>-->
+
+    <!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->
+              <!--android:layout_width="0dp"-->
+              <!--android:id="@+id/list_empty_text"-->
+              <!--android:gravity="center"-->
+              <!--android:text="The history is empty. Try to copy something to the clipboard"-->
+              <!--android:textSize="18sp"-->
+              <!--android:textColor="#8e8e8e"-->
+              <!--android:layout_height="0dp"-->
+              <!--android:padding="10dp"-->
+              <!--android:visibility="gone" tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="0dp"/>-->
+
+    <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" tools:layout_editor_absoluteY="29dp"
+            tools:layout_editor_absoluteX="44dp" android:id="@+id/debug_button"/>
+
 
 </android.support.constraint.ConstraintLayout>

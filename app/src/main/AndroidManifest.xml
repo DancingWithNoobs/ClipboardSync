@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.cedric.clipboardsync">
 
+    <uses-permission android:name="android.permission.GET_CLIPS"/>
+    <uses-permission android:name="android.permission.READ_CLIPS"/>
+    <uses-permission android:name="android.permission.WRITE_CLIPS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -19,6 +25,25 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+                android:name=".SettingsActivity"
+                android:label="@string/title_activity_settings">
+        </activity>
+
+        <service
+                android:name=".ClipboardChecker"
+                android:enabled="true"
+                android:exported="true">
+        </service>
+
+        <receiver
+                android:name=".ServiceStarter"
+                android:enabled="true"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
