@@ -6,8 +6,7 @@
           android:gravity="start"
           android:text="sample"
           android:layout_margin="4dip"
-          android:textSize="18sp" android:layout_height="wrap_content" android:textAlignment="viewStart"
+          android:textSize="18sp" android:layout_height="match_parent" android:textAlignment="viewStart"
           android:padding="10dp"
-          android:visibility="gone"
-
+          android:visibility="visible"
 />

@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
+import com.cedric.clipboardsync.database.ClipboardDbAdapter;
 import com.cedric.clipboardsync.sender.SenderTask;
 import com.cedric.clipboardsync.sender.TcpClient;
 
@@ -35,14 +37,19 @@ public class ClipboardChecker extends Service
                         SenderTask task = new SenderTask();
                         task.execute(serverIp, serverPort, message);
 
+                        ClipboardDbAdapter adapter = new ClipboardDbAdapter(getApplicationContext());
+                        adapter.open();
+                        adapter.insertClipboard(clipboard.getText().toString());
+
                         if (sendNotification)
                         {
-                            Toast.makeText( getApplicationContext(), "SENT", Toast.LENGTH_SHORT).show();
+                            Toast.makeText( getApplicationContext(), adapter.getAllClipboards().toString(), Toast.LENGTH_SHORT).show();
                         }
-
+                        adapter.close();
                     }
                     catch (Exception ex)
                     {
+                        Log.e("ERROR", ex.getMessage() + ex.getStackTrace());
                     }
                 }
             }

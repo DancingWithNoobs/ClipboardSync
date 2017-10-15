@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
+import com.cedric.clipboardsync.database.ClipboardDbAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class Main extends AppCompatActivity
         thisContext = getApplicationContext();
 
 
-        SetupDebugButton();
+        //SetupDebugButton();
         SetupToolbar();
         SetupHistoryList();
         SetupClipboardChecker();
@@ -46,33 +47,40 @@ public class Main extends AppCompatActivity
 
     private void SetupDebugButton()
     {
-        Button clickButton = (Button) findViewById(R.id.debug_button);
-        clickButton.setOnClickListener( new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v)
-            {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-
-
-                Boolean textToDisplay = prefs.getBoolean("notifications_clipboard", false);
-                Toast.makeText(getApplicationContext() , textToDisplay.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        Button clickButton = (Button) findViewById(R.id.debug_button);
+//        clickButton.setOnClickListener( new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v)
+//            {
+//                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//
+//
+//
+//                Boolean textToDisplay = prefs.getBoolean("notifications_clipboard", false);
+//                Toast.makeText(getApplicationContext() , textToDisplay.toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     private void SetupHistoryList()
     {
-//        ListView myListView = (ListView) findViewById(R.id.historyList);
-//        historyList = new ArrayList<String>();
-//        //historyList.add("something");
-//
-//        TextView emptyText = (TextView)findViewById(R.id.list_empty_text);
-//        myListView.setEmptyView(emptyText);
-//
-//        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_black_text, historyList);
-//        myListView.setAdapter(adapter);
+        ListView myListView = (ListView) this.findViewById(R.id.historyList);
+        historyList = new ArrayList<String>();
+
+        ClipboardDbAdapter dbAdapter = new ClipboardDbAdapter(getApplicationContext());
+        dbAdapter.open();
+        ArrayList<String> clipboards = dbAdapter.getAllClipboards();
+        dbAdapter.close();
+
+        //historyList.add("something");
+        historyList.addAll(clipboards);
+
+        TextView emptyText = (TextView)findViewById(R.id.list_empty_text);
+        myListView.setEmptyView(emptyText);
+
+        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_black_text, historyList);
+        myListView.setAdapter(adapter);
     }
 
     private void SetupToolbar()
