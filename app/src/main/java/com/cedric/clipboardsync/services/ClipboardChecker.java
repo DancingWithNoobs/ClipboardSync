@@ -1,4 +1,4 @@
-package com.cedric.clipboardsync;
+package com.cedric.clipboardsync.services;
 
 import android.app.Service;
 import android.content.ClipboardManager;
@@ -43,7 +43,7 @@ public class ClipboardChecker extends Service
 
                         if (sendNotification)
                         {
-                            Toast.makeText( getApplicationContext(), adapter.getAllClipboards().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText( getApplicationContext(), "Clipboard sent", Toast.LENGTH_SHORT).show();
                         }
                         adapter.close();
                     }

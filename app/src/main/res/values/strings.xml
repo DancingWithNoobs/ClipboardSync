@@ -11,5 +11,6 @@
     <string name="server_port_default">40004</string>
 
     <string name="pref_header_notifications">Notifications</string>
+    <string name="clear_database">Clear database</string>
 
 </resources>

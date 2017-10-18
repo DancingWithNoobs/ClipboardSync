@@ -3,12 +3,12 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-            android:fragment="com.cedric.clipboardsync.SettingsActivity$GeneralPreferenceFragment"
+            android:fragment="com.cedric.clipboardsync.activities.SettingsActivity$GeneralPreferenceFragment"
             android:title="@string/pref_header_general"
             android:icon="@drawable/ic_info_black_24dp"/>
 
     <header
-            android:fragment="com.cedric.clipboardsync.SettingsActivity$NotificationPreferenceFragment"
+            android:fragment="com.cedric.clipboardsync.activities.SettingsActivity$NotificationPreferenceFragment"
             android:title="@string/pref_header_notifications"
             android:icon="@drawable/ic_notifications_black_24dp"/>
 

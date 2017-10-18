@@ -1,10 +1,11 @@
-package com.cedric.clipboardsync;
+package com.cedric.clipboardsync.broadcastReceivers;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
+import com.cedric.clipboardsync.services.ClipboardChecker;
 
 public class ServiceStarter extends BroadcastReceiver
 {

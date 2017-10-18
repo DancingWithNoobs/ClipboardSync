@@ -1,25 +1,20 @@
-package com.cedric.clipboardsync;
+package com.cedric.clipboardsync.activities;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
-import android.text.TextUtils;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
+import com.cedric.clipboardsync.R;
+import com.cedric.clipboardsync.database.ClipboardDbAdapter;
 
-import java.time.chrono.MinguoChronology;
 import java.util.List;
 
 public class SettingsActivity extends AppCompatPreferenceActivity
@@ -90,9 +85,47 @@ public class SettingsActivity extends AppCompatPreferenceActivity
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
+
+
             bindPreferenceSummaryToValue(findPreference("server_ip"));
             bindPreferenceSummaryToValue(findPreference("server_port"));
+
+            // Clear database button
+            Preference button = findPreference("clear_database");
+            button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+            {
+                @Override
+                public boolean onPreferenceClick(Preference preference)
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener).show();
+                    return true;
+                }
+            });
         }
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                switch (which)
+                {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        ClipboardDbAdapter adapter = new ClipboardDbAdapter(getContext());
+
+                        adapter.open();
+                        adapter.clearDatabase();
+                        adapter.close();
+
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item)

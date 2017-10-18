@@ -1,26 +1,20 @@
-package com.cedric.clipboardsync;
+package com.cedric.clipboardsync.activities;
 
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.*;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
+import com.cedric.clipboardsync.services.ClipboardChecker;
+import com.cedric.clipboardsync.R;
 import com.cedric.clipboardsync.database.ClipboardDbAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
 {
     private ArrayAdapter<String> adapter;
     private List<String> historyList;
@@ -32,11 +26,29 @@ public class Main extends AppCompatActivity
         setContentView(R.layout.activity_main);
         thisContext = getApplicationContext();
 
+        Toast.makeText( getApplicationContext(), "On Create", Toast.LENGTH_SHORT).show();
 
         //SetupDebugButton();
         SetupToolbar();
         SetupHistoryList();
         SetupClipboardChecker();
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        ClipboardDbAdapter dbAdapter = new ClipboardDbAdapter(getApplicationContext());
+        dbAdapter.open();
+        ArrayList<String> clipboards = dbAdapter.getAllClipboards();
+        dbAdapter.close();
+
+        Toast.makeText( getApplicationContext(), "On start" + clipboards, Toast.LENGTH_SHORT).show();
+
+        historyList.clear();
+        historyList.addAll(clipboards);
+
+        adapter.notifyDataSetChanged();
     }
 
     private void SetupClipboardChecker()
@@ -68,13 +80,12 @@ public class Main extends AppCompatActivity
         ListView myListView = (ListView) this.findViewById(R.id.historyList);
         historyList = new ArrayList<String>();
 
-        ClipboardDbAdapter dbAdapter = new ClipboardDbAdapter(getApplicationContext());
-        dbAdapter.open();
-        ArrayList<String> clipboards = dbAdapter.getAllClipboards();
-        dbAdapter.close();
-
-        //historyList.add("something");
-        historyList.addAll(clipboards);
+//        ClipboardDbAdapter dbAdapter = new ClipboardDbAdapter(getApplicationContext());
+//        dbAdapter.open();
+//        ArrayList<String> clipboards = dbAdapter.getAllClipboards();
+//        dbAdapter.close();
+//
+//        historyList.addAll(clipboards);
 
         TextView emptyText = (TextView)findViewById(R.id.list_empty_text);
         myListView.setEmptyView(emptyText);

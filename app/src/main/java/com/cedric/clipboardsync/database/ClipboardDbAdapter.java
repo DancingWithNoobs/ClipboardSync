@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -56,6 +55,7 @@ public class ClipboardDbAdapter
     {
         dbHelper.close();
     }
+
     public long insertClipboard(String description)
     {
         ContentValues newTodoValues = new ContentValues();
@@ -77,10 +77,8 @@ public class ClipboardDbAdapter
                 if (cursor.moveToFirst())
                 {
                     do
-                        {
-                        String obj = new String();
-
-                        obj = cursor.getString(1);
+                    {
+                        String obj = cursor.getString(1);
 
                         list.add(obj);
                     }
@@ -110,6 +108,26 @@ public class ClipboardDbAdapter
             }
         }
         return list;
+    }
+
+    public void clearDatabase()
+    {
+        String deleteQuery = "DELETE FROM " + CLIPBOARD_TABLE_NAME;
+
+        try
+        {
+            db.execSQL(deleteQuery);
+        }
+        finally
+        {
+            try
+            {
+                db.close();
+            }
+            catch (Exception ignore)
+            {
+            }
+        }
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper

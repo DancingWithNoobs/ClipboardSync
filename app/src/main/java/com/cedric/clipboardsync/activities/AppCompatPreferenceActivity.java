@@ -1,4 +1,4 @@
-package com.cedric.clipboardsync;
+package com.cedric.clipboardsync.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
