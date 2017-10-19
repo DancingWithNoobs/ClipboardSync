@@ -1,37 +1,29 @@
-package com.cedric.clipboardsync.sender;
+package com.cedric.clipboardsync.sync;
 
 import android.util.Log;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class TcpClient
 {
-    private  String serverIp;
-    private int serverPort;
-
-    private String mServerMessage;
-
     private PrintWriter mBufferOut;
 
     public TcpClient(String serverIp, String serverPort)
     {
-        this.serverIp = serverIp;
-        this.serverPort = Integer.parseInt(serverPort);
+        int serverPort1 = Integer.parseInt(serverPort);
 
         try
         {
             InetAddress serverAddr = InetAddress.getByName(serverIp);
-
-            Socket socket = new Socket(serverAddr, this.serverPort);
-
+            Socket socket = new Socket(serverAddr, serverPort1);
             mBufferOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-
         }
         catch (Exception ex)
         {
-            Log.d("STATE", ex.getMessage() +ex.getStackTrace());
+            Log.d("STATE", ex.getMessage() + Arrays.toString(ex.getStackTrace()));
         }
     }
 
@@ -53,6 +45,5 @@ public class TcpClient
         }
 
         mBufferOut = null;
-        mServerMessage = null;
     }
 }

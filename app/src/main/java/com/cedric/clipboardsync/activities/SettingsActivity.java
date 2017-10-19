@@ -85,8 +85,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-
-
             bindPreferenceSummaryToValue(findPreference("server_ip"));
             bindPreferenceSummaryToValue(findPreference("server_port"));
 
@@ -98,8 +96,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity
                 public boolean onPreferenceClick(Preference preference)
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
-                            .setNegativeButton("No", dialogClickListener).show();
+                    String areYouSureString = getResources().getString(R.string.are_you_sure);
+                    String yesString = getResources().getString(R.string.are_you_sure);
+                    String noString = getResources().getString(R.string.are_you_sure);
+                    builder.setMessage(areYouSureString).setPositiveButton(yesString, dialogClickListener).setNegativeButton(noString, dialogClickListener).show();
                     return true;
                 }
             });

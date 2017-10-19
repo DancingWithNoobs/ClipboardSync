@@ -10,8 +10,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 import com.cedric.clipboardsync.database.ClipboardDbAdapter;
-import com.cedric.clipboardsync.sender.SenderTask;
-import com.cedric.clipboardsync.sender.TcpClient;
+import com.cedric.clipboardsync.tasks.SenderTask;
 
 public class ClipboardChecker extends Service
 {
