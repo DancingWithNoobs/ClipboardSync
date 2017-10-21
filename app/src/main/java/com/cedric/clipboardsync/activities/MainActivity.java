@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity
         SetupClipboardChecker();
     }
 
-    
     private void CheckServer()
     {
         TextView notConnectedText = (TextView) this.findViewById(R.id.noServerText);
