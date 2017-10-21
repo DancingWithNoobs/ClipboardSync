@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_CLIPS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
             android:allowBackup="true"
@@ -44,9 +46,13 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+        <!-- Receive Wi-Fi connection state changes -->
+        <receiver android:name=".broadcastReceivers.NetworkReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
-        <activity android:name=".activities.AbutActivity">
-        </activity>
         <activity android:name=".activities.AboutActivity">
         </activity>
     </application>

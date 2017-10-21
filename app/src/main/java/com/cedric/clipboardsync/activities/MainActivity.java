@@ -2,11 +2,13 @@ package com.cedric.clipboardsync.activities;
 
 import android.content.*;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.*;
 import com.cedric.clipboardsync.services.ClipboardChecker;
 import com.cedric.clipboardsync.R;
@@ -33,6 +35,24 @@ public class MainActivity extends AppCompatActivity
         SetupClipboardChecker();
     }
 
+    private void CheckServer()
+    {
+        TextView notConnectedText = (TextView) this.findViewById(R.id.noServerText);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String serverIp = prefs.getString("server_ip", "");
+        String serverPort = prefs.getString("server_port", "");
+
+        if (serverIp.isEmpty() || serverPort.isEmpty())
+        {
+            notConnectedText.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            notConnectedText.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     protected void onStart()
     {
@@ -48,6 +68,8 @@ public class MainActivity extends AppCompatActivity
         historyList.clear();
         historyList.addAll(clipboards);
         adapter.notifyDataSetChanged();
+
+        CheckServer();
     }
 
     private void SetupClipboardChecker()

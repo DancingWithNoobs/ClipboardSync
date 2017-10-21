@@ -3,7 +3,9 @@ package com.cedric.clipboardsync.sync;
 import android.util.Log;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Arrays;
 
@@ -24,6 +26,29 @@ public class TcpClient
         catch (Exception ex)
         {
             Log.d("STATE", ex.getMessage() + Arrays.toString(ex.getStackTrace()));
+        }
+    }
+
+    public static boolean isPortOpen(final String ip, final int port, final int timeout) {
+
+        try
+        {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(ip, port), timeout);
+            socket.close();
+            return true;
+        }
+
+        catch(ConnectException ce)
+        {
+            ce.printStackTrace();
+            return false;
+        }
+
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            return false;
         }
     }
 
